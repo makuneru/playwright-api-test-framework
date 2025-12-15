@@ -78,6 +78,6 @@ jobs:
         with:
           files: playwright/report/results.xml
           check_name: Playwright Test Results
-          comment_mode: create new
+          comment_mode: always
           report_individual_runs: true
 
