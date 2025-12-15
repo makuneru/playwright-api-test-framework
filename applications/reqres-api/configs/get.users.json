@@ -1,0 +1,21 @@
+{
+  "pageId": "GET_USERS",
+  "testSuite": "ReqRes API",
+  "description": "Get list of users",
+  "url": "/api/users",
+  "method": "GET",
+  "params": {
+    "page": 1,
+    "per_page": 6
+  },
+  "mode": "standalone",
+  "tags": ["@reqres", "@users", "@standalone"],
+  "validations": {
+    "status": {
+      "code": 200,
+      "message": "OK"
+    },
+    "schemaPath": "../../applications/reqres-api/schemas/get.users.schema.json"
+  }
+}
+

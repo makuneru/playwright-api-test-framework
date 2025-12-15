@@ -1,0 +1,21 @@
+{
+  "pageId": "GET_USER_BY_ID",
+  "testSuite": "ReqRes API",
+  "description": "Get user by ID",
+  "url": "/api/users/{id}",
+  "method": "GET",
+  "mode": "dependent",
+  "tags": ["@reqres", "@users", "@dependent"],
+  "dependencies": ["GET_USERS"],
+  "filter": {
+    "id": "data.data.find(u => u.email.includes('george'))?.id || data.data[0]?.id"
+  },
+  "validations": {
+    "status": {
+      "code": 200,
+      "message": "OK"
+    },
+    "schemaPath": "../../applications/reqres-api/schemas/get.user.by.id.schema.json"
+  }
+}
+

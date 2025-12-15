@@ -1,0 +1,23 @@
+{
+  "name": "playwright-api-test-framework",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Playwright API Testing Framework with API_KEY and OAuth2 support",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:reqres": "playwright test tests/reqres-api",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report playwright/report",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.2",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "dotenv": "^17.2.3",
+    "typescript": "^5.9.3"
+  }
+}

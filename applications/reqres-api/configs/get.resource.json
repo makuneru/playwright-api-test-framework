@@ -1,0 +1,21 @@
+{
+  "pageId": "GET_RESOURCE",
+  "testSuite": "ReqRes API",
+  "description": "Get resource list",
+  "url": "/api/resource",
+  "method": "GET",
+  "params": {
+    "page": 1,
+    "per_page": 6
+  },
+  "mode": "standalone",
+  "tags": ["@reqres", "@resource", "@standalone"],
+  "validations": {
+    "status": {
+      "code": 200,
+      "message": "OK"
+    },
+    "schemaPath": "../../applications/reqres-api/schemas/get.resource.schema.json"
+  }
+}
+

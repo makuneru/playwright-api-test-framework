@@ -1,0 +1,21 @@
+{
+  "pageId": "GET_RESOURCE_BY_ID",
+  "testSuite": "ReqRes API",
+  "description": "Get resource by ID",
+  "url": "/api/resource/{id}",
+  "method": "GET",
+  "mode": "dependent",
+  "tags": ["@reqres", "@resource", "@dependent"],
+  "dependencies": ["GET_RESOURCE"],
+  "filter": {
+    "id": ".data[0].id"
+  },
+  "validations": {
+    "status": {
+      "code": 200,
+      "message": "OK"
+    },
+    "schemaPath": "../../applications/reqres-api/schemas/get.resource.by.id.schema.json"
+  }
+}
+

@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Get Users Response",
+  "description": "JSON Schema for Get Users API response - GET /api/users",
+  "type": "object",
+  "properties": {
+    "page": {
+      "type": "number",
+      "description": "Current page number"
+    },
+    "per_page": {
+      "type": "number",
+      "description": "Number of items per page"
+    },
+    "total": {
+      "type": "number",
+      "description": "Total number of items"
+    },
+    "total_pages": {
+      "type": "number",
+      "description": "Total number of pages"
+    },
+    "data": {
+      "type": "array",
+      "description": "Array of user objects",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "User ID"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User email address"
+          },
+          "first_name": {
+            "type": "string",
+            "description": "User first name"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "User last name"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "uri",
+            "description": "User avatar URL"
+          }
+        },
+        "required": ["id", "email", "first_name", "last_name", "avatar"]
+      }
+    },
+    "support": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": ["url", "text"]
+    },
+    "_meta": {
+      "type": "object",
+      "description": "Metadata about the API",
+      "properties": {
+        "powered_by": {
+          "type": "string"
+        },
+        "upgrade_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "docs_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "template_gallery": {
+          "type": "string",
+          "format": "uri"
+        },
+        "message": {
+          "type": "string"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "upgrade_cta": {
+          "type": "string"
+        }
+      },
+      "required": ["powered_by", "upgrade_url", "docs_url", "template_gallery", "message", "features", "upgrade_cta"]
+    }
+  },
+  "required": ["page", "per_page", "total", "total_pages", "data", "support"]
+}

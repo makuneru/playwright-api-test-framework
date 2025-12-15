@@ -1,0 +1,7 @@
+{
+  "BASE_URL": "https://reqres.in",
+  "API_KEY": "your",
+  "TEST_ENV": "DEV",
+  "AUTH_TYPE": "API_KEY"
+}
+
