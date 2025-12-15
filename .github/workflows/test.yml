@@ -10,6 +10,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     environment: 
       name: ${{ github.ref == 'refs/heads/master' && 'production' || 'development' }}
     
@@ -56,6 +60,27 @@ jobs:
           path: playwright/report/
           retention-days: 30
 
+      - name: Add test report link to job summary
+        if: always()
+        run: |
+          echo "## 📊 Test Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### View HTML Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Artifact Download Link:**" >> $GITHUB_STEP_SUMMARY
+          echo "- [Download Playwright HTML Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Steps to view:**" >> $GITHUB_STEP_SUMMARY
+          echo "1. Click the link above to go to the workflow run" >> $GITHUB_STEP_SUMMARY
+          echo "2. Scroll down to the \`Artifacts\` section" >> $GITHUB_STEP_SUMMARY
+          echo "3. Download \`playwright-report\` artifact" >> $GITHUB_STEP_SUMMARY
+          echo "4. Extract the ZIP file and open \`index.html\` in your browser" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Direct artifact URL format:**" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
       - name: Upload test results (JUnit)
         if: always()
         uses: actions/upload-artifact@v4
@@ -71,13 +96,4 @@ jobs:
           name: json-results
           path: playwright/report/results.json
           retention-days: 30
-
-      - name: Publish test results
-        if: always()
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        with:
-          files: playwright/report/results.xml
-          check_name: Playwright Test Results
-          comment_mode: always
-          report_individual_runs: true
 
