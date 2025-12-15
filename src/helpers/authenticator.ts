@@ -61,18 +61,12 @@ export class AuthWorker {
 
   /**
    * Get API Key from environment configuration
+   * Returns empty string if not set (for public APIs that don't require authentication)
    */
   @step('Get API Key')
   async getApiKey(): Promise<string> {
     const config = getEnvironmentConfig();
-    const apiKey = config.apiKey;
-
-    if (!apiKey) {
-      throw new Error(
-        'API_KEY is required but not found in environment configuration. ' +
-          'Please set API_KEY in your profile or environment variables.'
-      );
-    }
+    const apiKey = config.apiKey || '';
 
     return apiKey;
   }
@@ -166,6 +160,7 @@ export class AuthWorker {
 
   /**
    * Get authentication header based on auth type
+   * Returns empty object if API_KEY is not set (for public APIs)
    */
   @step('Get Auth Header')
   async getAuthHeader(authType: AuthType = 'API_KEY'): Promise<Record<string, string>> {
@@ -173,8 +168,12 @@ export class AuthWorker {
       const bearerToken = await this.getBearerToken();
       return { Authorization: bearerToken };
     } else {
-      // API_KEY authentication
+      // API_KEY authentication - only include header if API key is provided
       const apiKey = await this.getApiKey();
+      if (!apiKey || apiKey.trim() === '') {
+        // Return empty object for public APIs that don't require authentication
+        return {};
+      }
       return { 'x-api-key': apiKey };
     }
   }
