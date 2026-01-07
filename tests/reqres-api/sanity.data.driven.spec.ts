@@ -3,10 +3,7 @@ import {
   loadConfigs,
   groupConfigsByType,
 } from '../../src/helpers/configLoader';
-import {
-  generateStandaloneTests,
-  generateDependentTests,
-} from '../../src/helpers/testGenerator';
+import { TestGenerator } from '../../src/helpers/testGenerator';
 import * as path from 'path';
 
 // Get current directory in ES modules
@@ -25,23 +22,20 @@ const allConfigs = loadConfigs(REQRES_CONFIGS_PATH);
 const { standalone: standaloneConfigs, dependent: dependentConfigs } =
   groupConfigsByType(allConfigs);
 
-// Additional tags to add to all tests
-const additionalTags = ['@sanity'];
+// Initialize Test Generator with shared configuration
+const testGenerator = new TestGenerator({
+  dirname: __dirname,
+  additionalTags: ['@sanity'],
+  enforceSchemaValidation: true, // Enforce schema validation for all tests
+});
 
 // ============================================================================
 // STANDALONE TESTS (no dependencies)
 // ============================================================================
-generateStandaloneTests(standaloneConfigs, {
-  dirname: __dirname,
-  additionalTags,
-});
+testGenerator.generateStandaloneTests(standaloneConfigs);
 
 // ============================================================================
 // DEPENDENT TESTS (require dependencies)
 // ============================================================================
-generateDependentTests(dependentConfigs, {
-  dirname: __dirname,
-  allConfigs,
-  additionalTags,
-});
+testGenerator.generateDependentTests(dependentConfigs, allConfigs);
 

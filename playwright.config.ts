@@ -47,7 +47,7 @@ const createEnvConfigFromProfile = (profile: ProfileConfig) => {
 // Environment configuration with priority: .env > JSON profile > defaults
 export const getEnvironmentConfig = () => {
   const isCI = !!process.env.CI;
-  const profileName = process.env.PROFILE || 'dev';
+  const profileName = process.env.PROFILE || 'default';
 
   // Check if tenant-specific env vars are set (from project.env)
   if (
